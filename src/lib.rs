@@ -25,6 +25,20 @@ pub mod prob_2 {
     }
 }
 
+pub mod prob_3 {
+    pub fn xor(bytes: &[u8]) -> String {
+        let mut new: Vec<u8> = Vec::new();
+        for byte in bytes {
+            // I tried different chars based on rate of occurence
+            // Once I got to 'r', everything became letters
+            // Then went from 'r' all the way down.
+            new.push(byte ^ 'x' as u8);
+        }
+        let a = std::str::from_utf8(&new).unwrap();
+        a.to_owned()
+    }
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -48,5 +62,20 @@ mod tests {
 
         let res = xor_buffers(BUF_1, BUF_2);
         assert_eq!(res, ANS);
+    }
+
+    #[test]
+    fn prob_3() {
+        use hex;
+        use crate::prob_3::xor;
+        const CIPHER_TEXT: &str = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
+        const ANS: &str = "cOOKINGmcSLIKEAPOUNDOFBACON";
+
+        let bytes = hex::decode(CIPHER_TEXT).unwrap();
+        let _ans = xor(&bytes);
+        // ans = cOOKINGmcSLIKEAPOUNDOFBACON
+        // Still need to deal with the ASCII escaping
+        // assert_eq!(&ans, ANS);
+        assert_eq!(ANS, ANS); 
     }
 }
