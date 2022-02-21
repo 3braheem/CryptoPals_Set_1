@@ -72,10 +72,9 @@ mod tests {
         const ANS: &str = "cOOKINGmcSLIKEAPOUNDOFBACON";
 
         let bytes = hex::decode(CIPHER_TEXT).unwrap();
-        let _ans = xor(&bytes);
-        // ans = cOOKINGmcSLIKEAPOUNDOFBACON
-        // Still need to deal with the ASCII escaping
-        // assert_eq!(&ans, ANS);
-        assert_eq!(ANS, ANS); 
+        let ans = xor(&bytes);
+        let ans = ans.replace("\u{0}", "");
+        let ans = ans.replace("\u{7}", "");
+        assert_eq!(&ans, ANS); 
     }
 }
